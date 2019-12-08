@@ -17,7 +17,7 @@ if length//size != length / size:
     print("bad dimensions")
     sys.exit()
 
-print(nl)
+#print(nl)
 for i in range(nl):
     layers.append(inp[i*size:(i+1)*size])
 #print(layers)
@@ -40,7 +40,14 @@ for r in range(height):
         line.append(res[r*width + c])
     res2.append(line)
 
-for line in res2: print(line)
+for r in range(len(res2)):
+    line = []
+    for c in range(len(res2[0])):
+        if res2[r][c] == "1":
+            line.append("X")
+        else:
+            line.append(" ")
+    print(''.join(line))
 
 # image representation of res2:
 #   GCPHL
