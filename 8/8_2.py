@@ -31,8 +31,6 @@ for layer in layers:
         if layer[c] in ("0", "1"):
             res[c] = layer[c]
 
-#print(''.join(res))
-    
 res2 = []
 for r in range(height):
     line = []
