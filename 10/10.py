@@ -33,21 +33,26 @@ def simpdir(direc):
     else:
         return (dx // gcd, dy // gcd)
 
+def detected_comets(r, c, comets):
+    height = len(comets)
+    width = len(comets[0])
+    handleddirs = []
+    detected = [[False for col in range(width)] for row in range(height)]
+    for r2 in range(height):
+        for c2 in range(width):
+            direc = simpdir((r2-r, c2-c))
+            if direc in handleddirs or direc == (0,0):
+                continue
+            handleddirs.append(direc)
+            findcomets(r, c, r, c, direc[0], direc[1], comets, board, detected)
+    return detected
+
 for r in range(height):
     for c in range(width):
         if comets[r][c] != "#":
             continue
-        handleddirs = []
-        detected = [[False for c in range(width)] for r in range(height)]
-        for r2 in range(height):
-            for c2 in range(width):
-                direc = simpdir((r2-r, c2-c))
-                if direc in handleddirs or direc == (0,0):
-                    continue
-                handleddirs.append(direc)
-                findcomets(r, c, r, c, direc[0], direc[1], comets, board, detected)
+        detected = detected_comets(r, c, comets)
         count = list(chain(*detected)).count(True)
-        #print("(%d, %d) %d" %(r, c, count))
         board[r][c] = count
 
 # find pos with max comets in direct line of sight
@@ -61,4 +66,5 @@ for r in range(height):
             maxval = val
             maxx = r
             maxy = c
-print("%d: (%d, %d)" % (maxval, maxx, maxy))
+
+print("%d: (%d, %d)" % (maxval, maxy, maxx))
