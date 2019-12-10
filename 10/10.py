@@ -13,13 +13,15 @@ def on_board(r, c, board):
         return False
     return True
 
-def recadd(r, c, dr, dc, comets, board):
+def findcomets(orir, oric, r, c, dr, dc, comets, board, detected):
     r += dr
     c += dc
-    if not on_board(r, c, board) or comets[r][c] == "#" :
+    if not on_board(r, c, board):
         return
-    board[r][c] += 1
-    recadd(r, c, dr, dc, comets, board)
+    if comets[r][c] == "#" and not detected[r][c]:
+        detected[r][c] = True
+        return
+    findcomets(orir, oric, r, c, dr, dc, comets, board, detected)
 
 def simpdir(direc):
     dx, dy = direc
@@ -35,15 +37,18 @@ for r in range(height):
     for c in range(width):
         if comets[r][c] != "#":
             continue
-        # increment one when direct line of sight
         handleddirs = []
+        detected = [[False for c in range(width)] for r in range(height)]
         for r2 in range(height):
             for c2 in range(width):
                 direc = simpdir((r2-r, c2-c))
                 if direc in handleddirs or direc == (0,0):
                     continue
                 handleddirs.append(direc)
-                recadd(r, c, direc[0], direc[1], comets, board)
+                findcomets(r, c, r, c, direc[0], direc[1], comets, board, detected)
+        count = list(chain(*detected)).count(True)
+        #print("(%d, %d) %d" %(r, c, count))
+        board[r][c] = count
 
 # find pos with max comets in direct line of sight
 maxx = -1
