@@ -33,7 +33,7 @@ def simpdir(direc):
         return (dx // gcd, dy // gcd)
 
 def angle(r, c):
-    return atan2(c, r)
+    return - atan2(c, r) - math.pi
 
 def outnum(r, c):
     return c*100 + r
@@ -84,7 +84,7 @@ remaining = 200
 while True:
     # find comets in direct line of sight => detected
     detected = detected_comets(r, c, comets)
-    angles = [(row, col, -(angle(row-r, col-c) + math.pi)) for col in range(width) for row in range(height) if detected[row][col]]
+    angles = [(row, col, angle(row-r, col-c)) for col in range(width) for row in range(height) if detected[row][col]]
     angles.sort(key=lambda tup:tup[2])
     if len(angles) >= remaining:
         tup = angles[remaining-1]
