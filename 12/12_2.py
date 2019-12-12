@@ -1,5 +1,3 @@
-import math
-
 def getxyz():
     x, y, z = [int(st[2:]) for st in input().replace("<", "").replace(">", "").split(", ")]
     #print(x, y, z)
@@ -26,14 +24,6 @@ def apply(list, delta):
     for i in range(len(list)):
         list[i] += delta[i]
 
-def lcm(a, b):
-    return abs(a*b) // math.gcd(a, b)
-
-def lcm3(a,b,c):
-    ab = lcm(a,b)
-    res = lcm(ab, c)
-    return res
-
 moons = [list(getxyz()) for i in range(4)]
 res = []
 
@@ -54,5 +44,4 @@ for s in range(3): # for every axis
     res.append(steps)
 
 for s in res: print(s)
-
-print(2*lcm3(*res))
+print(res[0]*res[1]*res[2])
