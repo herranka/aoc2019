@@ -1,5 +1,3 @@
-from itertools import combinations
-
 def getxyz():
     x, y, z = [int(st[2:]) for st in input().replace("<", "").replace(">", "").split(", ")]
     #print(x, y, z)
