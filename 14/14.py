@@ -68,7 +68,7 @@ def weight(component, reactions):
     if component.type == "ORE":
         return 0 # 0 distance from ore
     else:
-        return min([weight(c, reactions) for c in find_reaction(reactions, component.type).components]) + 1
+        return max([weight(c, reactions) for c in find_reaction(reactions, component.type).components]) + 1
 
 # define weights
 weights = {} # type -> weight
